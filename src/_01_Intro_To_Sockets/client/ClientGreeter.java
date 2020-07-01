@@ -46,6 +46,7 @@ public class ClientGreeter {
 	   		socket.close();
 	   		
 	   } catch (IOException e) {
+		   System.out.println("hi");
 		   e.printStackTrace();
 	   }
    }
