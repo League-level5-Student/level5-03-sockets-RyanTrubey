@@ -23,8 +23,9 @@ public class Server {
 	ObjectInputStream is;
 	ChatApp chatApp;
 
-	public Server(int port) {
+	public Server(int port, ChatApp chatApp) {
 		this.port = port;
+		this.chatApp = chatApp;
 	}
 
 	public void start() {
@@ -41,7 +42,7 @@ public class Server {
 			while (connection.isConnected()) {
 
 				try {
-					this.chatApp.setClientMessage(is.readUTF());
+					this.chatApp.setMessage(is.readUTF());
 				} catch (EOFException e) {
 					JOptionPane.showMessageDialog(null, "Connection Lost");
 					System.exit(0);

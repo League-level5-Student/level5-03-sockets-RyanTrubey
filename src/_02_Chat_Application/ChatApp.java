@@ -18,11 +18,10 @@ import javax.swing.JTextField;
 
 public class ChatApp extends JFrame{
 	
-	Server server = new Server(8080);
-	Client client = new Client("127.0.0.1", 8080);
+	Server server = new Server(8080, this);
+	Client client;
 	
-	JTextField serverText = new JTextField("Enter message here");
-	JTextField clientText = new JTextField("Enter message here");
+	JTextField textField = new JTextField("Enter message here");
 	JButton send = new JButton("Send Message");
 	JPanel panel = new JPanel();
 	String messages = "";
@@ -37,11 +36,11 @@ public class ChatApp extends JFrame{
 			setTitle("SERVER");
 			JOptionPane.showMessageDialog(null, "Server started at: " + server.getIPAddress() + "\nPort: " + server.getPort());
 			send.addActionListener((e)->{
-				server.sendMessage(serverText.getText());
-				serverText.setText("");
+				server.sendMessage(textField.getText());
+				textField.setText("");
 			});
 			panel.add(send);
-			panel.add(serverText);
+			panel.add(textField);
 			add(panel);
 			pack();
 			setVisible(true);
@@ -54,12 +53,13 @@ public class ChatApp extends JFrame{
 			String ipStr = JOptionPane.showInputDialog("Enter the IP Address");
 			String prtStr = JOptionPane.showInputDialog("Enter the port number");
 			int port = Integer.parseInt(prtStr);
-			client = new Client(ipStr, port);
+			client = new Client(ipStr, port, this);
 			send.addActionListener((e)->{
-				client.sendMessage(clientText.getText());
+				client.sendMessage(textField.getText());
+				textField.setText("");
 			});
 			panel.add(send);
-			panel.add(clientText);
+			panel.add(textField);
 			add(panel);
 			pack();
 			setVisible(true);
@@ -69,11 +69,7 @@ public class ChatApp extends JFrame{
 		}
 	}
 	
-	public void setServerMessage(String s) {
-		serverText.setText(s);
-	}
-	
-	public void setClientMessage(String s) {
-		clientText.setText(s);
+	public void setMessage(String s) {
+		textField.setText(s);
 	}
 }

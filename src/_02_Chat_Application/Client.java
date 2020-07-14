@@ -20,9 +20,10 @@ public class Client {
 	ObjectInputStream is;
 	ChatApp chatApp;
 
-	public Client(String ip, int port) {
+	public Client(String ip, int port, ChatApp chatApp) {
 		this.ip = ip;
 		this.port = port;
+		this.chatApp = chatApp;
 	}
 
 	public void start(){
@@ -44,7 +45,7 @@ public class Client {
 		while (connection.isConnected()) {
 			
 			try {
-				this.chatApp.setServerMessage(is.readUTF());
+				this.chatApp.setMessage(is.readUTF());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
